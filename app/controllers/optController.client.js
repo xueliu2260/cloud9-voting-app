@@ -1,43 +1,15 @@
-<!DOCTYPE html>
+'use strict';
 
-<html>
-
-	<head>
-		<title>Hello</title>
-		
-		<link href="/public/css/option.css" rel="stylesheet" type="text/css">
-	</head>
-    <body>
-		<div class="container">
-		    <p>Welcome, <span id="display"></span>!</p>
-		</div>
-		<div id="chartdiv" style="width: 100%; height: 400px;"></div>
-        <table align="center" cellspacing="20">
-            <tr>
-                <td>
-                    <input type="radio" checked="true" name="group" id="rb1" onclick="setLabelPosition()">labels outside
-                    <input type="radio" name="group" id="rb2" onclick="setLabelPosition()">labels inside</td>
-                <td>
-                    <input type="radio" name="group2" id="rb3" onclick="set3D()">3D
-                    <input type="radio" checked="true" name="group2" id="rb4" onclick="set3D()">2D</td>
-                <td>Legend switch type:
-                    <input type="radio" checked="true" name="group3" id="rb5"
-                    onclick="setSwitch()">x
-                    <input type="radio" name="group3" id="rb6" onclick="setSwitch()">v</td>
-            </tr>
-        </table>
-		
-		
-		
-		<script src="/amchars/amcharts.js"></script>
-        <script src="/amchars/pie.js"></script>
-        <script src="/amchars/export.min.js"></script>
-        <link rel="stylesheet" href="/amchars/export.css" type="text/css" media="all" />
-        <script src="/amchars/light.js"></script>
-		
-		
-        <script>
-        var chartData = [
+(function () {
+//   var addButton = document.querySelector('.btn-add');
+//   var deleteButton = document.querySelector('.btn-delete');
+   var openOnePoll = document.querySelector('.openPoll');
+   var display = document.querySelector('#display');
+   var apiUrlOption = 'polls/:id/options';
+    var chart;
+    var legend;
+    
+    var chartData = [
         {
             "country": "Czech Republic",
             "litres": 156.9
@@ -122,14 +94,37 @@
         }
         legend.validateNow();
     }
-    </script>
-        <div id="chartdiv"></div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/node_modules/bootstrap/docs/assets/js/vendor/jquery.min.js"><\/script>')</script>
-        <!--<script type="text/javascript" src="controllers/optController.client.js"></script>-->
-        <script type="text/javascript" src="controllers/userController.client.js"></script>
-		<script type="text/javascript" src="common/ajax-functions.js"></script>
-	</body>
-	
+    
+//   function ready (fn) {
+//       if (typeof fn !== 'function') {
+//          return;
+//       }
 
-</html>
+//       if (document.readyState === 'complete') {
+//          return fn();
+//       }
+
+//       document.addEventListener('DOMContentLoaded', fn, false);
+//   }
+
+//   function ajaxRequest (method, url, callback) {
+//       var xmlhttp = new XMLHttpRequest();
+
+//       xmlhttp.onreadystatechange = function () {
+//          if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+//             callback(xmlhttp.response);
+//          }
+//       };
+
+//       xmlhttp.open(method, url, true);
+//       xmlhttp.send();
+//   }
+//   function getOption (data) {
+//         var parseData = JSON.parse(data);
+
+//         display.innerHTML = parseData;
+//         console.log(apiUrlOption);
+//   }
+//   ready(ajaxRequest('GET', apiUrlOption, getOption));
+   
+})();

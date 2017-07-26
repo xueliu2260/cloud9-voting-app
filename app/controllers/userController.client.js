@@ -5,33 +5,39 @@
    var profileId = document.querySelector('#profile-id') || null;
    var profileUsername = document.querySelector('#profile-username') || null;
    var profileRepos = document.querySelector('#profile-repos') || null;
-   var displayName = document.querySelector('#display-name');
-   var apiUrl = appUrl + '/api/:id';
+   var displayName = document.querySelector('#display');
+   //var apiUrl = appUrl + '/api/:id';
+   var apiUrl = '/polls/:id';
 
-   function updateHtmlElement (data, element, userProperty) {
-      element.innerHTML = data[userProperty];
+   function ready (fn) {
+      if (typeof fn !== 'function') {
+         return;
+      }
+
+      if (document.readyState === 'complete') {
+         return fn();
+      }
+
+      document.addEventListener('DOMContentLoaded', fn, false);
    }
 
-   ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
-      var userObject = JSON.parse(data);
+   function ajaxRequest (method, url, callback) {
+      var xmlhttp = new XMLHttpRequest();
 
-      if (userObject.displayName !== null) {
-         updateHtmlElement(userObject, displayName, 'displayName');
-      } else {
-         updateHtmlElement(userObject, displayName, 'username');
-      }
+      xmlhttp.onreadystatechange = function () {
+         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+            callback(xmlhttp.response);
+         }
+      };
 
-      if (profileId !== null) {
-         updateHtmlElement(userObject, profileId, 'id');   
-      }
+      xmlhttp.open(method, url, true);
+      xmlhttp.send();
+   }
+   ready(ajaxRequest('GET', apiUrl, function (data){
 
-      if (profileUsername !== null) {
-         updateHtmlElement(userObject, profileUsername, 'username');   
-      }
-
-      if (profileRepos !== null) {
-         updateHtmlElement(userObject, profileRepos, 'publicRepos');   
-      }
-
+      console.log(apiUrl);
+      console.log("here");
+      displayName.innerHTML = "success";
+      console.log("json :" + JSON.parse(data));
    }));
 })();
