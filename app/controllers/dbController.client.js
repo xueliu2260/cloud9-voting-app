@@ -42,7 +42,7 @@
             var a = document.createElement("a");
             a.id = parseData[i]._id;
             //a.href = "polls/" + a.id;
-            a.href = "polls/" + a.id;
+            a.href = "options/" + a.id;
             a.className = "openPoll";
             a.innerHTML = parseData[i].question;
             display.appendChild(a);

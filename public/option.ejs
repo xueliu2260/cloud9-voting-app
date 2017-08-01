@@ -9,24 +9,41 @@
 	</head>
     <body>
 		<div class="container">
-		    <p hidden id="result"><%= result %></p>
-		    
+		    <p hidden id="result"><%= result.options %></p>
+		    <form action="/pull/update" method="post">
+    		    <div class="selectdiv" style="text-align:center">
+    		        <input type="hidden" value=<%= result._id %> name="id">
+    	            <p>I'd like vote for ...</p>
+        		    <select class="btn" id="select" name="vote">
+                        <option value="default" selected disabled>Choose an option</option>
+                        <% result.options.forEach(function(res) { %>
+                            <option value=<%=res.opt%>><%= res.opt %></option>
+                        <% }); %>
+                    </select>
+    		        <input  type="submit" class="btn btn-submit" value="submit">
+    		        <!--<input class="btn btn-share" value="share on facebook">-->
+        		</div>
+        		   
+        	</form>
+    		<div id="chartdiv">
+    		    <table align="center" cellspacing="20">
+                    <tr>
+                        <td>
+                            <input type="radio" checked="true" name="group" id="rb1" onclick="setLabelPosition()">labels outside
+                            <input type="radio" name="group" id="rb2" onclick="setLabelPosition()">labels inside</td>
+                        <td>
+                            <input type="radio" name="group2" id="rb3" onclick="set3D()">3D
+                            <input type="radio" checked="true" name="group2" id="rb4" onclick="set3D()">2D</td>
+                        <td>Legend switch type:
+                            <input type="radio" checked="true" name="group3" id="rb5"
+                            onclick="setSwitch()">x
+                            <input type="radio" name="group3" id="rb6" onclick="setSwitch()">v</td>
+                    </tr>
+                </table>
+    		</div>
+            
 		</div>
-		<div id="chartdiv" style="width: 100%; height: 400px;"></div>
-        <table align="center" cellspacing="20">
-            <tr>
-                <td>
-                    <input type="radio" checked="true" name="group" id="rb1" onclick="setLabelPosition()">labels outside
-                    <input type="radio" name="group" id="rb2" onclick="setLabelPosition()">labels inside</td>
-                <td>
-                    <input type="radio" name="group2" id="rb3" onclick="set3D()">3D
-                    <input type="radio" checked="true" name="group2" id="rb4" onclick="set3D()">2D</td>
-                <td>Legend switch type:
-                    <input type="radio" checked="true" name="group3" id="rb5"
-                    onclick="setSwitch()">x
-                    <input type="radio" name="group3" id="rb6" onclick="setSwitch()">v</td>
-            </tr>
-        </table>
+		
 		
 		
 		
@@ -38,7 +55,7 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		
         <script>
-        var res = <%= JSON.stringify(result) %>;
+        var res = <%= JSON.stringify(result.options) %>;
         console.log(res);
         var title = [];
         var count = [];
@@ -115,8 +132,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/node_modules/bootstrap/docs/assets/js/vendor/jquery.min.js"><\/script>')</script>
         <!--<script type="text/javascript" src="controllers/optController.client.js"></script>-->
-        <!--<script type="text/javascript" src="https://voting-app-liuerbaozi2260.c9users.io/controllers/userController.client.js"></script>-->
+        
 		<script type="text/javascript" src= "https://voting-app-liuerbaozi2260.c9users.io/common/ajax-functions.js"></script>
+		<!--<script type="text/javascript" src="https://voting-app-liuerbaozi2260.c9users.io/controllers/optController.client.js"></script>-->
 	</body>
 	
 

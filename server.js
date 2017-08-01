@@ -30,12 +30,20 @@ var test = require('assert');
 var url = 'mongodb://liuerbaozi2260:zja900530@ds137220.mlab.com:37220/glitch-project';      
 // //(Focus on This Variable)
 var collection;
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+app.use(bodyParser.json());
+
 
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/amchars', express.static(process.cwd() + '/amchars'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/common', express.static(process.cwd() + '/app/common'));
 app.use('/node_modules', express.static(process.cwd() + '/node_modules'));
+
 app.use(session({
 	secret: 'secretClementine',
 	resave: false,

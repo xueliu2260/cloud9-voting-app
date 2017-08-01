@@ -68,9 +68,24 @@ module.exports = function (app, db) {
 			
 	// 		//dbHandler.getId;
 	// 	});
+	// app.route('/options/:id').get(function(req,res){
+
+	// 			res.sendFile(path + '/public/option.html');
+			
+	// 		//dbHandler.getId;
+	// 	});
 	
-	app.route('/polls/:id')
+	app.route('/options/:id')
 		.get(dbHandler.getId);
-	// 	.post(isLoggedIn, clickHandler.addClick)
-	// 	.delete(isLoggedIn, clickHandler.resetClicks);
+		
+	app.route('/pull/update')
+		.post(dbHandler.addOptionCount);
+	// app.post('/pull/update', function(req, res){
+	// 	dbHandler.addOptionCount;
+	// 	// console.log(req.body.id);
+	// 	// console.log(req.body.vote);
+	// });
+
+
+	
 };

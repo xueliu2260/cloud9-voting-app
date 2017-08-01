@@ -1,7 +1,84 @@
+.container{
+  width: 70%;
+  height: 500px;
+  background-color: #e6e6e6;
+  border-radius: 5px;
+  margin:auto;
+}
+
+.selectdiv{
+  float: left;
+  width: 40%;
+  height: 500px;
+  font-size: 1.1em;
+  margin-top: 100px;
+}
+
+.btn{
+  display: block;
+  width:250px;
+  font-size: 0.8em;
+  margin:auto;
+  margin-top:10px;
+}
+
+.btn-submit {
+  background: #35a2e6;
+  background-image: -webkit-linear-gradient(top, #35a2e6, #2980b9);
+  background-image: -moz-linear-gradient(top, #35a2e6, #2980b9);
+  background-image: -ms-linear-gradient(top, #35a2e6, #2980b9);
+  background-image: -o-linear-gradient(top, #35a2e6, #2980b9);
+  background-image: linear-gradient(to bottom, #35a2e6, #2980b9);
+  -webkit-border-radius: 16;
+  -moz-border-radius: 16;
+  border-radius: 16px;
+  font-family: Arial;
+  color: #ffffff;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+}
+
+.btn-submit:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+.btn-share {
+  background: #1978b3;
+  background-image: -webkit-linear-gradient(top, #1978b3, #0d75b5);
+  background-image: -moz-linear-gradient(top, #1978b3, #0d75b5);
+  background-image: -ms-linear-gradient(top, #1978b3, #0d75b5);
+  background-image: -o-linear-gradient(top, #1978b3, #0d75b5);
+  background-image: linear-gradient(to bottom, #1978b3, #0d75b5);
+  -webkit-border-radius: 16;
+  -moz-border-radius: 16;
+  border-radius: 16px;
+  font-family: Arial;
+  color: #ffffff;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+}
+
+.btn-share:hover {
+  background: #378ec7;
+  background-image: -webkit-linear-gradient(top, #378ec7, #2784c2);
+  background-image: -moz-linear-gradient(top, #378ec7, #2784c2);
+  background-image: -ms-linear-gradient(top, #378ec7, #2784c2);
+  background-image: -o-linear-gradient(top, #378ec7, #2784c2);
+  background-image: linear-gradient(to bottom, #378ec7, #2784c2);
+  text-decoration: none;
+}
 #chartdiv {
-  width: 100%;
+  width: 60%;
   height: 500px;
   font-size: 11px;
+  float: right;
+  
 }
 
 .amcharts-pie-slice {
@@ -20,3 +97,4 @@
   transform: scale(1.1);
   filter: url(#shadow);
 }							
+
