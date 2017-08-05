@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Profile</title>
+		
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="facebook-profile">
+				<p><span id="display-name" class="profile-value"><%= userName%></span></p>
+			</div>
+			<a class="btn display-center btn-size" href="/new/pull">create a pull</a>
+			<div class="display-center pollList" id="displayPullList">
+				<% for(var i=0;i<pullList.length;i++){ %>
+					<div class="col-sm-4 well text-center text-info">
+					 	<a href=<%= '/pull/'+pullList[i]._id %> style="text-decoration: none;">
+					 		<h3><%= pullList[i].name %></h3>
+					 	</a>
+					</div>
+				<% } %>
+			</div>
+			<div class="display-center button">
+				<a class="menu" href="/">Home</a>
+				<p id="menu-divide">|</p>
+				<a class="menu" href="/logout">Logout</a>	
+			</div>
+		</div>
+		
+	</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>NewPoll</title>
+		
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	</head>
+
+	<body>
+	    <div  class="jumbotron text-center">
+	        <h2><a href="/profile" style="decoration:none"><%= userName %></a> create a new poll</h2>
+	    </div>
+		<div class="container">
+		    
+			<form class="display-center" action="/new/pull" method="post">
+			    <ul class="form-style-1">
+                    <li>
+                        <label>Title <span class="required">*</span></label>
+                        <input type="text" name="title" class="field-long" placeholder="Input poll title"/>
+                    </li>
+                    <li>
+                        <label>Your Options <span class="required">*</span></label>
+                        <textarea name="options" class="field-long field-textarea" placeholder="Input poll options seperate by line"></textarea>
+                    </li>
+                    <li>
+                        <input type="submit" value="Submit" />
+                    </li>
+                </ul>
+			</form>    
+		</div>
+		
+	</body>
+
+</html>

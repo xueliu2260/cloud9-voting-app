@@ -31,9 +31,10 @@
       xmlhttp.open(method, url, true);
       xmlhttp.send();
    }
-   var parseData;
+   
    function updatePoll (data) {
-         parseData = JSON.parse(data);
+        var parseData = JSON.parse(data);
+        console.log("in index");
         console.log(parseData.length);
         for(var i = 0; i < parseData.length; i++){
             console.log(parseData[i]);
@@ -41,21 +42,12 @@
             //clickNbr.innerHTML = parseData[i];
             var a = document.createElement("a");
             a.id = parseData[i]._id;
-            //a.href = "polls/" + a.id;
-            a.href = "options/" + a.id;
+            a.href = "/pull/" + a.id;
             a.className = "openPoll";
-            a.innerHTML = parseData[i].question;
+            a.innerHTML = parseData[i].name;
             display.appendChild(a);
         }
        
-    //   var clicksObject = JSON.parse(data);
-    //   console.log(clicksObject);
-    //   clickNbr.innerHTML = clicksObject.question;
    }
-   // function getId(data){
-   //    console.log("received " + parseData(data));
-   // }
-   // ready(ajaxRequest('GET', apiUrlOption, getId));
    ready(ajaxRequest('GET', apiUrl, updatePoll));
-   //ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, updateClickCount));
 })();

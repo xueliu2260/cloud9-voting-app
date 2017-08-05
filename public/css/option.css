@@ -6,6 +6,16 @@
   margin:auto;
 }
 
+.container p {
+  font-family: 'Roboto';
+	text-align: center;
+	padding: 0;
+}
+#display-name {
+  font-family: 'Roboto';
+  text-align: center;
+	font-weight: 400;
+}
 .selectdiv{
   float: left;
   width: 40%;

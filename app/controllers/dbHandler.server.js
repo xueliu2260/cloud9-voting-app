@@ -1,7 +1,9 @@
 // 'use strict';
 var Users = require('../models/users.js');
-var mongodb = require('mongodb');
-var MongoClient = mongodb.MongoClient;
+var pullList = require('../models/pull.js');
+var path = process.cwd();
+//var mongodb = require('mongodb');
+//var MongoClient = mongodb.MongoClient;
 function objectLength(obj) {
   var result = 0;
   for(var prop in obj) {
@@ -13,96 +15,128 @@ function objectLength(obj) {
   return result;
 }
 var ObjectID = require('mongodb').ObjectID;  
-function DbHandler (db) {
+function DbHandler () {
         
-    	var clicks = db.collection('voting-app-database');
-        //console.log("000");
-        var sum = 0;
-        clicks.count().then((count) => {
-            sum = count;
-        });
+    // 	var clicks = db.collection('voting-app-database');
+    //     //console.log("000");
+    //     var sum = 0;
+    //     clicks.count().then((count) => {
+    //         sum = count;
+    //     });
         //console.log("sum :" + totalIndexSize);
         this.getQuestion = function (req, res) {
             //console.log("111");
-    		var clickProjection = { '_id': false };
-            var c = 0;
-            //var sum = objectLength(clicks.find().length);
-            
-    		clicks.find(function(err, result){
-    		    if (err) throw err;
-                var jsonRes = [];
-                
-                if (result) {
-                    //res.send(result);
-                    
-                    result.each(function(err, item) {
-                        if (err) throw err;
-                        if(item == null) {
-                            //db.close();
-                        }else{
-                          //db.close();
-                          //console.log(item.question);
-                          c++;
-                          console.log(c);
-                          //console.log("item :" + item._id);
-                                  
-                          jsonRes.push(item);
-                          if(c == sum) res.json(jsonRes);
-    		
-                        }
-                    });
-                }
-    		});
+            pullList.find({}).sort({_id:-1}).limit(6).exec(function(err,data){
+				if(err){
+					res.redirect('/');
+				} else {
+					//console.log(data);
+					res.json(data);
+				// 	res.render('index.ejs',{
+				// 		recent: data
+				// 	});
+				}
+			});
         };
-        var path = process.cwd();
-        this.getId = function(req, res){
-            // console.log("url:" + req.url);
-            var id = req.url.split("/")[2];
-//             console.log("db url:" + req.url);
-// 			console.log("id:"  + id);
-			
-			var clicks = db.collection('voting-app-database');
-    		clicks.findOne({_id:new ObjectID(id)}, function(err, result){
-    		    if (err) throw err;
-    		    
-    		    
-    		    if(result == null) {
-                    //db.close();
-                }else{
-                  //console.log(result.options);
-	              res.render(path + '/public/option.ejs', {result : result});
-	              //res.json(result.options);
-                }
-    		    //res.sendFile(path + '/public/option.html');
-    		});
+        
+        this.getUserInfo = function(req, res){
+            console.log(req.url);
+            var userId = req.user.fb.id;
+            pullList.find({createdBy: userId}).exec(function(err, result){
+               if(err){
+                   res.redirect('/');
+               }else{
+                //   console.log(result);
+                //   console.log("send get pull");
+                   res.render(path + '/public/profile.ejs', {
+                    userName: req.user.fb.displayName,
+                    pullList: result
+                });
+               } 
+               
+            });
+            
+        };
+        this.getOptions = function(req, res){
+             var id = req.url.split("/")[2];
+             console.log("db url:" + req.url);
+ 			 console.log("id:"  + id);
+ 			 pullList.findOne({_id: id}, function(err, result){
+ 			     if(err){
+ 			         return err;
+ 			     }else{
+ 			         console.log(result);
+ 			         res.render(path + '/public/option.ejs', {
+ 			            optionsResult: result
+ 			         });
+ 			     }
+ 			 });
+        };
+        
+        this.addNewPull = function(req, res){
+          
+        //   console.log(req.body.title);
+        //   console.log(req.user.fb.displayName);
+        //   console.log(req.body.options);
+        
+            var newPullList = new pullList();
+            newPullList.name = req.body.title;
+            newPullList.createdBy = req.user.fb.id;
+            var newOptionList = [];
+            var optionList = req.body.options.split('\r\n');
+              optionList.forEach(function(option){
+                  if(option != ''){
+                      var optDic = {
+                          opt : option,
+                          count: 0
+                      };
+                      newOptionList.push(optDic);
+                  }
+              });
+            newPullList.optionListAndResult = newOptionList;
+             newPullList.save(function(err){
+              if(err){
+                  return err;
+              }else{
+                  console.log("pull save succeed");
+                  res.redirect('/profile');
+              }
+          });
+
+         
         };
         
         this.addOptionCount = function(req, res){
-    //         console.log("add a count");
-    //         console.log(req.body.id);
-		  //  console.log(req.body.vote);
+    //         console.log("id" + req.body.id);
+		  //  console.log("vote" + req.body.vote);
 		    
 		    
-            clicks.findOne({_id:new ObjectID(req.body.id)}, function(err,data){
+            pullList.findOne({_id:new ObjectID(req.body.id)}, function(err,data){
 				if(err){
 					res.redirect('/');
 				} else {
 					if (data) {
                     //res.send(result);
                     //console.log(data);
-                            var result = data.options;
-    		                for(var i = 0; i < result.length; i++){
-        					    if(result[i].opt == req.body.vote){
-        					        result[i].count += 1;
-        					       // console.log(result[i].count);
-        					       // console.log(data.options[i].count);
-        					    }
-        					}
-        					data.options = result;
-        					//console.log("here");
-        					clicks.save({_id:new ObjectID(req.body.id), question:data.question, options:data.options});
-        					res.redirect('/options/'+req.body.id);
-                    
+                    var result = data.optionListAndResult;
+	                for(var i = 0; i < result.length; i++){
+					    if(result[i].opt == req.body.vote){
+					        result[i].count += 1;
+					       // console.log(result[i].count);
+					       // console.log(data.options[i].count);
+					    }
+					}
+					data.optionListAndResult = result;
+					//console.log("here");
+					data.save(function(err){
+                      if(err){
+                          return err;
+                      }else{
+                          console.log("pull update succeed");
+                          res.redirect('/pull/'+req.body.id);
+                      }
+                  });
+					
                 }
 				
 				}

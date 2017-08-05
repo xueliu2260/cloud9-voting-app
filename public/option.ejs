@@ -9,16 +9,16 @@
 	</head>
     <body>
 		<div class="container">
-		    <p hidden id="result"><%= result.options %></p>
 		    <form action="/pull/update" method="post">
+		         <p hidden id="result"><%= optionsResult.optionListAndResult %></p>
     		    <div class="selectdiv" style="text-align:center">
-    		        <input type="hidden" value=<%= result._id %> name="id">
+    		        <input type="hidden" value=<%= optionsResult._id %> name="id">
     	            <p>I'd like vote for ...</p>
         		    <select class="btn" id="select" name="vote">
                         <option value="default" selected disabled>Choose an option</option>
-                        <% result.options.forEach(function(res) { %>
-                            <option value=<%=res.opt%>><%= res.opt %></option>
-                        <% }); %>
+                        <% for(var i = 0; i < optionsResult.optionListAndResult.length; i++) { %>
+                            <option value=<%=optionsResult.optionListAndResult[i].opt%>><%= optionsResult.optionListAndResult[i].opt %></option>
+                        <% }; %>
                     </select>
     		        <input  type="submit" class="btn btn-submit" value="submit">
     		        <!--<input class="btn btn-share" value="share on facebook">-->
@@ -55,7 +55,7 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		
         <script>
-        var res = <%= JSON.stringify(result.options) %>;
+        var res = <%= JSON.stringify(optionsResult.optionListAndResult) %>;
         console.log(res);
         var title = [];
         var count = [];
